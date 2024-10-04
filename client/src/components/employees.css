@@ -1,0 +1,362 @@
+
+.employees-box
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    background: black;
+    box-sizing: border-box;
+}
+
+.current-employees
+{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.employees
+{
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgb(0, 255, 255);
+    border-top: none;
+    border-right: none;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    flex-direction: column;
+    gap: 0.8em;
+}
+
+.previous-employees
+{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.deleted-employees
+{
+    width: 100%;
+    height: 100%;
+    border: 2px solid aqua;
+    border-left: none;
+    border-top: none;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: start;
+    gap: .4em;
+    
+}
+
+.title
+{
+   box-sizing: border-box;
+   padding: .5em 0;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 0;
+   border: 2px solid aqua;
+   box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+   background-color: aqua;
+   color: black;
+   font-weight: 900;
+}
+
+.search-box 
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    width: 100%;
+    padding: .2em 0;
+}
+      
+.search-box input 
+{
+    border: none;
+    border-bottom: 1px solid aqua;
+    background: rgba(27, 76, 60, 0.421);
+    color: white;
+    width: 90%;
+    outline: none;
+    padding: .5em .4em;
+    }
+
+.search-box input:focus
+{
+    border: none;
+    border-bottom: 1px solid red;
+    background: rgba(27, 76, 60, 0.421);
+    transition: all .5s ease-in;
+    transition: all .5s ease-out;
+    color: white;
+}
+      
+.search-box button 
+{
+    border: 2px solid aqua;
+    font-size: 60%;
+    font-weight: 700;
+    border-radius: 0;
+    background: aqua;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    padding: .8em .9em;
+    color: black;
+    cursor: pointer;
+}
+  
+
+.employees-table
+{
+    width: 100%;
+    height: 95%;
+    background: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-X: hidden;
+    box-sizing: border-box;
+    padding: .1em .5em;
+}
+
+.employees-table::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .employees-table::-webkit-scrollbar-track {
+    background: rgb(109, 4, 4);
+  }
+  
+  .employees-table::-webkit-scrollbar-thumb {
+    background: aquamarine;
+  }
+  
+  .employees-table::-webkit-scrollbar-thumb:hover {
+    background: rgba(3, 100, 68, 0.52);
+    transition: all .7s ease-in-out;
+  }
+
+.employees-table table 
+{
+    width: 100%;
+    border-collapse: collapse;
+    color: aqua;
+    box-sizing: border-box;
+}
+
+.employees-table th, .employees-table td 
+{
+    border: 1px solid aqua;
+    text-align: center;
+}
+
+.employees-table th 
+{
+    background: inherit;
+    font-size: 50%;
+    padding: .5em;
+}
+
+.employees-table td 
+{
+    background: black;
+    font-size: 50%;
+    padding: .4em;
+}
+
+.employees-table img 
+{
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: cover;
+}
+
+button 
+{
+    cursor: pointer;
+    background: black;
+    color: aqua;
+    border: 1px solid red;
+    border-radius: 10%;
+    font-size: 100%;
+}
+
+button:hover 
+{
+    border-left: 1px solid rgba(255, 0, 0, 0.413);
+    border-right: 1px solid rgba(255, 0, 0, 0.413);
+}
+
+.table-div
+{
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    padding: .7em;
+    box-sizing: border-box;
+}
+
+.table-button
+{
+    background: aqua;
+    border-radius: 5px;
+    color: black;
+}
+
+p 
+{
+    color: aqua;
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) 
+{
+    .employees-box
+    {
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+    }
+
+    .current-employees
+    {
+        height: 50%;
+        width: 100%;
+        padding: .5em .7em;
+    }
+
+    .previous-employees
+    {
+        height: 50%;
+        width: 100%;
+        padding: .5em .7em;
+    }
+
+    .title
+    {
+        font-size: 60%;
+        height: 10%;
+        width: 100%;
+        align-items: center;
+        border-radius: 0;
+        border: 2px solid aqua;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+        background-color: aqua;
+        color: black;
+        font-weight: 900;
+    }
+
+    .employees, 
+    .deleted-employees
+    {
+        border: none;
+        width: 100%;
+    }
+
+    .employees-table
+    {
+    height: 100%;
+    width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    align-items: flex-start;
+    }
+
+    .employees-table th 
+    {
+        background-color: inherit;
+        font-size: 70%;
+        padding: .4em;
+    }
+
+    .employees-table td 
+    {
+        background-color: black;
+        font-size: 70%;
+        padding: .3em;
+    }
+    
+    button 
+    {
+        font-size: 50%;
+    }
+
+    .table-button
+    {
+        background: aqua;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+        width: 100%;
+        color: black;
+    }
+
+    .table-div
+    {
+        display: flex;
+        flex-direction: column;
+        gap: .3em;
+    }
+
+    .search-box 
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        width: 100%;
+        padding: .7em 0;
+    }
+      
+    .search-box input 
+    {
+        border: none;
+        border-bottom: 1px solid aqua;
+        background: rgba(27, 76, 60, 0.421);
+        color: white;
+        width: 90%;
+        outline: none;
+        font-size: 70%;
+        padding: .7em .4em;
+    }
+
+    .search-box input:focus
+    {
+        border: none;
+        border-bottom: 1px solid red;
+        background: rgba(27, 76, 60, 0.421);
+        transition: all .5s ease-in;
+        transition: all .5s ease-out;
+        color: white;
+    }
+      
+    .search-box button 
+    {
+        border: 2px solid aqua;
+        font-size: 60%;
+        font-weight: 700;
+        border-radius: 0;
+        background: aqua;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        padding: .7em .9em;
+        color: black;
+        cursor: pointer;
+    }
+}

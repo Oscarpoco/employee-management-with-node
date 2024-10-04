@@ -1,0 +1,126 @@
+.form-box
+{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: inherit;
+    padding: 0 2em;
+}
+
+.sign-in-form
+{
+    width: 50%;
+    height: 70%;
+    background: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2em;
+    border: 3px solid aqua;
+    border-top: none;
+    border-bottom: none;
+    border-radius: 5%;
+}
+
+.admin
+{
+    background: inherit;
+    width: 75%;
+    height: 15%;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 90%;
+    border: 3px solid aqua;
+    border-bottom: none;
+    border-radius: 10%;
+}
+form
+{
+    width: 80%;
+    height: 85%;
+    background: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    
+}
+form input
+{
+    width: 80%;
+    height: 10%;
+    border: none;
+    border-bottom: 2px solid aqua;
+    background: rgba(11, 255, 255, 0.171);
+    outline: none;
+    font-size: 11px;
+    color: white;
+}
+
+form input:focus
+{
+    border-bottom: 2px solid red;
+}
+
+form button
+{
+    width: 25%;
+    height: 12%;
+    font-weight: bold;
+    font-size: 70%;
+    border: 2px solid aqua;
+    border-bottom: none;
+    color: red;
+    background-color: inherit;
+    border-radius: 10%;
+}
+
+form button:hover
+{
+    border: 2px solid rgb(5, 104, 71);
+    border-bottom: none;
+    color: rgb(5, 104, 71);
+    transition: all 1s ease-in-out;
+}
+.logo-box
+{
+    width: 50%;
+    height: 100%;
+    background: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-box img
+{
+    width: 50%;
+    height: 45%;
+}
+
+@media only screen and (max-width: 768px)
+{
+    .form-box
+    {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .sign-in-form
+    {
+        height: 40%;
+        width: 100%;
+    }
+    .logo-box
+    {
+        display: none;
+    }
+    
+}

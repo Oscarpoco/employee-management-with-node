@@ -1,0 +1,110 @@
+.registration-box
+{
+    width: 35%;
+    height: 88%;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid aqua;
+    border-top: none;
+    border-bottom: none;
+    border-radius: 5%;
+    gap: 1em;
+}
+
+.form-title
+{
+    width: 80%;
+    height: 7%;
+    border: 3px solid aqua;
+    border-bottom: none;
+    color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 80%;
+    border-radius: 10%;
+}
+
+.registration-box form
+{
+    border: none;
+    width: 80%;
+    height: 93%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+}
+
+.registration-box input
+{
+    height: 6%;
+    width: 90%;
+}
+
+.registration-box button
+{
+    width: 40%;
+    height: 8%;
+    border-radius: 10%;
+    border-bottom: none;
+    font-size: 65%;
+}
+
+#image
+{
+    background-color: black;
+    border: none;
+}
+
+@media only screen and (max-width: 768px) 
+{
+
+    .registration-box
+    {
+        width: 100%;
+        height: unset;
+        padding: 0 1em;
+    }
+
+    .form-title
+    {
+        font-size: 60%;
+        width: 100%;
+        padding: 1em 0;
+        border: 2px solid aqua;
+        border-radius: 17px;
+        color: black;
+        background: aqua;
+        font-weight: 900;
+    }
+
+    .registration-box button 
+    {
+        font-size: 70%;
+        width: auto;
+        padding: 1em 2em;
+        background: aqua;
+        color: black;
+    }
+
+    .registration-box form
+    {
+        border: none;
+        width: 100%;
+        height: unset;
+        justify-content: flex-start;
+        padding: 1em 0;
+    }
+    
+    .registration-box input
+    {
+        padding: 1.5em .3em;
+        width: 100%;
+    }
+}

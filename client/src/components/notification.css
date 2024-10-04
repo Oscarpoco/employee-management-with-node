@@ -1,0 +1,28 @@
+.notification 
+{
+    font-size: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 50%;
+    transform: translate(50%, 50%);
+    padding: 1em 2em;
+  }
+  
+  .notification.error 
+  {
+    background: white;
+    color: green;
+    border: 1px solid aqua;
+    border-bottom: none;
+    border-top: none;
+  }
+  
+  .notification.success 
+  {
+    background: white;
+    color: greenyellow;
+    border: 1px solid aqua;
+  }
