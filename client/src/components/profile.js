@@ -36,12 +36,12 @@ function Profile({ employee, onUpdateEmployee }) {
                 </div>
                 <div className='details-box'>
                     <div className='details'>
-                        <p>Name: {isEditing ? <input type='text' name='name' value={editedEmployee.name} onChange={handleInputChange} /> : editedEmployee.name}</p>
-                        <p>Surname: {isEditing ? <input type='text' name='surname' value={editedEmployee.surname} onChange={handleInputChange} /> : editedEmployee.surname}</p>
-                        <p>Email: {isEditing ? <input type='email' name='email' value={editedEmployee.email} onChange={handleInputChange} /> : editedEmployee.email}</p>
-                        <p>ID: {isEditing ? <input type='text' name='idNumber' value={editedEmployee.idNumber} onChange={handleInputChange} /> : editedEmployee.idNumber}</p>
-                        <p>Position: {isEditing ? <input type='text' name='position' value={editedEmployee.position} onChange={handleInputChange} /> : editedEmployee.position}</p>
-                        <p>Phone: {isEditing ? <input type='tel' name='phone' value={editedEmployee.phone} onChange={handleInputChange} /> : editedEmployee.phone}</p>
+                        <p><span>Name:</span> {isEditing ? <input type='text' name='name' value={editedEmployee.name} onChange={handleInputChange} /> : editedEmployee.name}</p>
+                        <p><span>Surname:</span> {isEditing ? <input type='text' name='surname' value={editedEmployee.surname} onChange={handleInputChange} /> : editedEmployee.surname}</p>
+                        <p><span>Email:</span> {isEditing ? <input type='email' name='email' value={editedEmployee.email} onChange={handleInputChange} /> : editedEmployee.email}</p>
+                        <p><span>ID:</span>{isEditing ? <input type='text' name='idNumber' value={editedEmployee.idNumber} onChange={handleInputChange} /> : editedEmployee.idNumber}</p>
+                        <p><span>Position:</span> {isEditing ? <input type='text' name='position' value={editedEmployee.position} onChange={handleInputChange} /> : editedEmployee.position}</p>
+                        <p> <span>Phone:</span>{isEditing ? <input type='tel' name='phone' value={editedEmployee.phone} onChange={handleInputChange} /> : editedEmployee.phone}</p>
                     </div>
                     <div className='button'>
                         <button onClick={handleEditClick}>{isEditing ? 'UPDATE' : 'EDIT'}</button>

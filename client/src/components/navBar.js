@@ -9,14 +9,14 @@ function NavBar({ onNavigate, onSignOut, currentView}){
             
             <div className='navigate-button'>
                 <button className= {currentView === 'employees' ? 'active' : ''}
-                onClick={() => onNavigate('employees')}>EMPLOYEES</button>
+                onClick={() => onNavigate('employees')}>Employees</button>
 
                 <button className= {currentView === 'registration' ? 'active' : ''}
-                onClick={() => onNavigate('registration')}>REGISTER</button>
+                onClick={() => onNavigate('registration')}>Register</button>
             </div>
 
             <div className='logout-button'>
-                <button onClick={onSignOut}>LOGOUT</button>
+                <button onClick={onSignOut}>Logout</button>
             </div>
         </div>
     )

@@ -12,24 +12,25 @@
 button
 {
     padding: .7em 1em;
-    border-radius: 0;
+    border-radius: 10px;
     border: 2px solid aqua;
     display: flex;
     justify-content: center;
     align-items: center;
     background: inherit;
-    font-size: 90%;
+    font-size: 70%;
     font-weight: bold;
-    color: red;
+    color: white;
 }
 
 button.active
 {
     background: aqua;
-    border-radius: 0;
+    border-radius: 10px;
     border: 2px solid aqua;
     background: aqua;
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    color: black;
 }
 
 .logout-button
@@ -65,19 +66,21 @@ button.active
   }
   .myNav button
   {
-    font-size: 40%;
-    border-radius: 0;
-    border: 2px solid white;
-    background: white;
+    font-size: 60%;
+    border-radius: 10px;
+    border: 2px solid aqua;
+    background: inherit;
+    color: white;
   }
 
   button.active
   {
     font-size: 55%;
-    border-radius: 0;
+    border-radius: 10px;
     border: 2px solid aqua;
     background: aqua;
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    color: black;
   }
 
   .myNav button:hover

@@ -16,7 +16,7 @@ function App() {
   const [employees, setEmployees] = useState([]);
   const [deletedEmployees, setDeletedEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState('');
 
   // Check login status on component mount
@@ -68,7 +68,7 @@ function App() {
       await axios.delete(`http://localhost:5000/employees/${id}`);
       setEmployees(employees.filter((employee) => employee.id !== id));
       setDeletedEmployees([...deletedEmployees, employeeToDelete]);
-      setNotification('Successfully deleted');
+      setTimeout(()=>{setNotification('Successfully deleted')}, 2000)
     } catch (error) {
       console.error('Error deleting employee:', error);
       setNotification('Failed to delete employee');

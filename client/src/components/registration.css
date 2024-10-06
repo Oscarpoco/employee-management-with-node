@@ -8,25 +8,27 @@
     justify-content: center;
     align-items: center;
     border: 3px solid aqua;
-    border-top: none;
-    border-bottom: none;
-    border-radius: 5%;
-    gap: 1em;
+    border-radius: 20px;
+    padding: .7em .3em;
+    padding-top: 1.5em;
+    gap: .5em;
+    box-sizing: border-box;
 }
 
 .form-title
 {
     width: 80%;
-    height: 7%;
-    border: 3px solid aqua;
-    border-bottom: none;
-    color: aqua;
+    padding: .4em 0;
+    border: 1px solid aqua;
+    color: black;
+    background: aqua;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-size: 80%;
-    border-radius: 10%;
+    font-weight: 900;
+    font-size: 100%;
+    border-radius: 50px;
+    box-sizing: border-box;
 }
 
 .registration-box form
@@ -43,15 +45,15 @@
 
 .registration-box input
 {
-    height: 6%;
-    width: 90%;
+    height: 7%;
+    width: 100%;
 }
 
 .registration-box button
 {
     width: 40%;
     height: 8%;
-    border-radius: 10%;
+    border-radius: 10px;
     border-bottom: none;
     font-size: 65%;
 }
@@ -67,9 +69,9 @@
 
     .registration-box
     {
-        width: 100%;
+        width: 90%;
         height: unset;
-        padding: 0 1em;
+        padding: 1em;
     }
 
     .form-title
@@ -104,7 +106,7 @@
     
     .registration-box input
     {
-        padding: 1.5em .3em;
+        padding: 1em;
         width: 100%;
     }
 }

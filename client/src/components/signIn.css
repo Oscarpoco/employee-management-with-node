@@ -7,6 +7,7 @@
     align-items: center;
     background: inherit;
     padding: 0 2em;
+    box-sizing: border-box;
 }
 
 .sign-in-form
@@ -18,76 +19,78 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.2em;
-    border: 3px solid aqua;
-    border-top: none;
-    border-bottom: none;
-    border-radius: 5%;
+    gap: 1em;
+    padding: 1em;
+    border-radius: 20px;
+    box-sizing: border-box;
 }
 
 .admin
 {
-    background: inherit;
+    background: aqua;
+    padding: .7em 0;
     width: 75%;
-    height: 15%;
-    color: red;
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-size: 90%;
-    border: 3px solid aqua;
-    border-bottom: none;
-    border-radius: 10%;
+    font-weight: 900;
+    font-size: 100%;
+    border: 1px solid aqua;
+    border-radius: 20px;
 }
+
 form
 {
-    width: 80%;
+    width: 100%;
     height: 85%;
     background: inherit;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1em;
-    
+    gap: 1.5em;
+    box-sizing: border-box;  
+    border: 2px solid aqua; 
+    border-radius: 20px;
 }
 form input
 {
-    width: 80%;
-    height: 10%;
+    width: 75%;
+    padding: 1em 2em;
     border: none;
-    border-bottom: 2px solid aqua;
+    border: 2px solid aqua;
+    border-radius: 20px;  
     background: rgba(11, 255, 255, 0.171);
     outline: none;
-    font-size: 11px;
+    font-size: 13px;
     color: white;
+    box-sizing: border-box;
 }
 
 form input:focus
 {
-    border-bottom: 2px solid red;
+    border: 2px solid white;
+    transition: all 1s ease-in;
+    transition: all 1s ease-out;
 }
 
 form button
 {
-    width: 25%;
-    height: 12%;
-    font-weight: bold;
-    font-size: 70%;
+    padding: .7em 2em;
+    font-weight: 900;
+    font-size: 100%;
     border: 2px solid aqua;
-    border-bottom: none;
-    color: red;
-    background-color: inherit;
-    border-radius: 10%;
+    color: black;
+    background-color: aqua;
+    border-radius: 10px;
 }
 
 form button:hover
 {
     border: 2px solid rgb(5, 104, 71);
-    border-bottom: none;
     color: rgb(5, 104, 71);
-    transition: all 1s ease-in-out;
+    transition: all .5s ease-in-out;
 }
 .logo-box
 {
@@ -101,8 +104,9 @@ form button:hover
 
 .logo-box img
 {
-    width: 50%;
-    height: 45%;
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
 }
 
 @media only screen and (max-width: 768px)
@@ -121,6 +125,11 @@ form button:hover
     .logo-box
     {
         display: none;
+    }
+
+    .admin
+    {
+        width: 100%;
     }
     
 }
