@@ -12,7 +12,7 @@ function Employees({ employees = [], onDeleteEmployee, onViewEmployee, deletedEm
   // HANDLE SEARCH
   const handleSearch = () => {
     if (searchId) {
-      const result = employees.filter(employee => employee.id.includes(searchId));
+      const result = employees.filter(employee => employee.idNumber.includes(searchId));
       setFilteredEmployees(result);
     } else {
       setFilteredEmployees(employees);
@@ -54,7 +54,7 @@ function Employees({ employees = [], onDeleteEmployee, onViewEmployee, deletedEm
                       <td>{employee.name}</td>
                       <td>{employee.surname}</td>
                       <td>{employee.email}</td>
-                      <td>{employee.id}</td>
+                      <td>{employee.idNumber}</td>
                       <td>{employee.position}</td>
                       <td>{employee.phone}</td>
                       <td><img src={employee.image} alt='employee'/></td>
@@ -96,7 +96,7 @@ function Employees({ employees = [], onDeleteEmployee, onViewEmployee, deletedEm
                       <td>{employee.name}</td>
                       <td>{employee.surname}</td>
                       <td>{employee.email}</td>
-                      <td>{employee.id}</td>
+                      <td>{employee.idNumber}</td>
                       <td>{employee.position}</td>
                       <td>{employee.phone}</td>
                       <td><img src={employee.image} alt='employee' width='50' /></td>

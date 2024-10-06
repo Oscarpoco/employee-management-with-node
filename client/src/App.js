@@ -14,6 +14,7 @@ function App() {
   const [currentView, setCurrentView] = useState('signIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [employees, setEmployees] = useState([]);
+  const [deletedEmployees, setDeletedEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [notification, setNotification] = useState('');
@@ -40,6 +41,8 @@ function App() {
     fetchEmployees();
   }, []);
 
+  
+
   // Handle add employee
   const handleAddEmployee = async (employee) => {
     setIsLoading(true);
@@ -57,21 +60,21 @@ function App() {
   };
 
   // Handle delete employee
+
+
   const handleDeleteEmployee = async (id) => {
-    console.log("ID to be deleted:", id); // Log ID to verify
-    setIsLoading(true);
     try {
+      const employeeToDelete = employees.find(emp => emp.id === id);
       await axios.delete(`http://localhost:5000/employees/${id}`);
       setEmployees(employees.filter((employee) => employee.id !== id));
+      setDeletedEmployees([...deletedEmployees, employeeToDelete]);
       setNotification('Successfully deleted');
     } catch (error) {
       console.error('Error deleting employee:', error);
       setNotification('Failed to delete employee');
-    } finally {
-      setIsLoading(false);
-      setTimeout(() => setNotification(''), 2000);
     }
   };
+
   
   
 
@@ -94,26 +97,45 @@ function App() {
   };
 
   // Handle login
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setIsLoading(true);
-    setTimeout(() => {
-      localStorage.setItem('isLoggedIn', 'true');
-      setIsLoggedIn(true);
-      setCurrentView('employees');
-      setIsLoading(false);
+    setTimeout(async () => {
+        localStorage.setItem('isLoggedIn', 'true');
+        setIsLoggedIn(true);
+        setCurrentView('employees');
+        
+        // Fetch employees after login
+        try {
+            const response = await axios.get(`http://localhost:5000/employees`);
+            setEmployees(response.data);
+        } catch (error) {
+            console.error('Error fetching employees:', error);
+        }
+        
+        setIsLoading(false);
     }, 2000);
   };
+
 
   // Handle sign-out
   const handleSignOut = () => {
     setIsLoading(true);
     setTimeout(() => {
-      localStorage.removeItem('isLoggedIn');
-      setIsLoggedIn(false);
-      setCurrentView('signIn');
-      setIsLoading(false);
+        localStorage.removeItem('isLoggedIn');
+        setIsLoggedIn(false);
+        setSelectedEmployee(null); // Clear selected employee
+        setCurrentView('signIn');
+        setIsLoading(false);
     }, 2000);
   };
+
+
+  // hANDLE VIEW PROFILE
+  const handleViewEmployee = (employee) => {
+    setSelectedEmployee(employee);  // Set the selected employee
+    setCurrentView('profile');      // Switch to the profile view
+  };
+  
 
   const renderContent = () => {
     switch (currentView) {
@@ -124,7 +146,8 @@ function App() {
           <Employees
             employees={employees}
             onDeleteEmployee={handleDeleteEmployee}
-            onViewEmployee={setSelectedEmployee}
+            onViewEmployee={handleViewEmployee}
+            deletedEmployees = {deletedEmployees}
           />
         );
       case 'registration':

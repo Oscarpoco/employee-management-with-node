@@ -50,17 +50,17 @@ app.get('/employees', async (req, res) => {
 
 // Delete employee by ID (equivalent to Firestore deleteDoc)
 app.delete('/employees/:id', async (req, res) => {
-  const { id } = req.params; // Extract the document ID from the URL
+  const { id } = req.params;
 
   try {
     const employeeDoc = db.collection('employees').doc(id); // Reference the document
     const docSnapshot = await employeeDoc.get(); // Fetch the document to check if it exists
 
     if (docSnapshot.exists) {
-      await employeeDoc.delete(); // Delete the document
+      await employeeDoc.delete();
       res.status(200).json({ message: 'Employee deleted successfully' });
     } else {
-      res.status(404).json({ message: 'Employee not found' }); // Handle if the document doesn't exist
+      res.status(404).json({ message: 'Employee not found' }); 
     }
   } catch (error) {
     console.error('Error deleting employee:', error);
