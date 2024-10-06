@@ -23,7 +23,7 @@ app.post('/employees', async (req, res) => {
   const { employee } = req.body;
 
   // Check if the employee object is present and has required fields
-  if (!employee || !employee.name || !employee.surname || !employee.email || !employee.id) {
+  if (!employee || !employee.name || !employee.surname || !employee.email || !employee.idNumber) {
     return res.status(400).json({ message: 'Employee data is missing or invalid' });
   }
 
@@ -50,15 +50,25 @@ app.get('/employees', async (req, res) => {
 
 // Delete employee by ID (equivalent to Firestore deleteDoc)
 app.delete('/employees/:id', async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // Extract the document ID from the URL
+
   try {
-    await db.collection('employees').doc(id).delete();
-    res.status(200).json({ message: 'Employee deleted successfully' });
+    const employeeDoc = db.collection('employees').doc(id); // Reference the document
+    const docSnapshot = await employeeDoc.get(); // Fetch the document to check if it exists
+
+    if (docSnapshot.exists) {
+      await employeeDoc.delete(); // Delete the document
+      res.status(200).json({ message: 'Employee deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Employee not found' }); // Handle if the document doesn't exist
+    }
   } catch (error) {
     console.error('Error deleting employee:', error);
     res.status(500).json({ message: 'Failed to delete employee' });
   }
 });
+
+
 
 // Update employee by ID (equivalent to Firestore updateDoc)
 app.put('/employees/:id', async (req, res) => {

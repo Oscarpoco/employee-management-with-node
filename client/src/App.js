@@ -58,6 +58,7 @@ function App() {
 
   // Handle delete employee
   const handleDeleteEmployee = async (id) => {
+    console.log("ID to be deleted:", id); // Log ID to verify
     setIsLoading(true);
     try {
       await axios.delete(`http://localhost:5000/employees/${id}`);
@@ -71,6 +72,8 @@ function App() {
       setTimeout(() => setNotification(''), 2000);
     }
   };
+  
+  
 
   // Handle update employee
   const handleUpdateEmployee = async (updatedEmployee) => {

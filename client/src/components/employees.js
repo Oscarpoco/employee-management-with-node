@@ -60,7 +60,7 @@ function Employees({ employees = [], onDeleteEmployee, onViewEmployee, deletedEm
                       <td><img src={employee.image} alt='employee'/></td>
                       <td className='table-div'>
                         <button className='table-button' onClick={() => onViewEmployee(employee)}>View</button>
-                        <button className='table-button' onClick={() => onDeleteEmployee(index)}>Delete</button>
+                        <button className='table-button' onClick={() => onDeleteEmployee(employee.id)}>Delete</button>
                       </td>
                     </tr>
                   ))}
