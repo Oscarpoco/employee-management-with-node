@@ -8,7 +8,7 @@ import Profile from './components/profile';
 import NavBar from './components/navBar';
 import Loader from './components/Loader';
 import Notification from './components/notification';
-
+import { storage, ref, uploadBytes, getDownloadURL } from './firebase/FirebaseConfig';
 
 function App() {
   const [currentView, setCurrentView] = useState('signIn');
@@ -29,26 +29,55 @@ function App() {
   // Load employees from server
   useEffect(() => {
     const fetchEmployees = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`http://localhost:5000/employees`);
         setEmployees(response.data);
-        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching employees:', error);
+      } finally {
         setIsLoading(false);
       }
     };
     fetchEmployees();
   }, []);
 
-  
+  // Load deleted employees from server
+  useEffect(() => {
+    const fetchDeletedEmployees = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`http://localhost:5000/deleted_employees`);
+        setDeletedEmployees(response.data);
+      } catch (error) {
+        console.error('Error fetching deleted employees:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchDeletedEmployees();
+  }, []);
 
   // Handle add employee
-  const handleAddEmployee = async (employee) => {
+  const handleAddEmployee = async (employee, file) => {
     setIsLoading(true);
+  
     try {
-      const response = await axios.post(`http://localhost:5000/employees`, { employee });
-      setEmployees([...employees, { ...employee, id: response.data.id }]);
+      let imageUrl = '';
+  
+      // Upload the image to Firebase Storage if a file is provided
+      if (file) {
+        const storageRef = ref(storage, `employees/${file.name}`); // You can customize the storage path
+        const snapshot = await uploadBytes(storageRef, file);
+        imageUrl = await getDownloadURL(snapshot.ref); // Get the uploaded image URL
+      }
+  
+      // Now include the image URL in the employee object
+      const newEmployee = { ...employee, profilePicture: imageUrl };
+  
+      const response = await axios.post('http://localhost:5000/employees', { employee: newEmployee });
+  
+      setEmployees([...employees, { ...newEmployee, id: response.data.id }]);
       setNotification('Successfully added');
     } catch (error) {
       console.error('Error adding employee:', error);
@@ -60,23 +89,20 @@ function App() {
   };
 
   // Handle delete employee
-
-
   const handleDeleteEmployee = async (id) => {
     try {
       const employeeToDelete = employees.find(emp => emp.id === id);
       await axios.delete(`http://localhost:5000/employees/${id}`);
-      setEmployees(employees.filter((employee) => employee.id !== id));
+      setEmployees(employees.filter(employee => employee.id !== id));
       setDeletedEmployees([...deletedEmployees, employeeToDelete]);
-      setTimeout(()=>{setNotification('Successfully deleted')}, 2000)
+      setNotification({ message: 'Successfully deleted', type: 'success' });
     } catch (error) {
       console.error('Error deleting employee:', error);
-      setNotification('Failed to delete employee');
+      setNotification({ message: 'Failed to delete employee', type: 'error' });
+    } finally {
+      setTimeout(() => setNotification(''), 2000);
     }
   };
-
-  
-  
 
   // Handle update employee
   const handleUpdateEmployee = async (updatedEmployee) => {
@@ -84,12 +110,12 @@ function App() {
     try {
       await axios.put(`http://localhost:5000/employees/${updatedEmployee.id}`, updatedEmployee);
       setEmployees((prevEmployees) =>
-        prevEmployees.map((emp) => (emp.id === updatedEmployee.id ? updatedEmployee : emp))
+        prevEmployees.map(emp => (emp.id === updatedEmployee.id ? updatedEmployee : emp))
       );
-      setNotification('Successfully updated');
+      setNotification({ message: 'Successfully updated', type: 'success' });
     } catch (error) {
       console.error('Error updating employee:', error);
-      setNotification('Failed to update employee');
+      setNotification({ message: 'Failed to update employee', type: 'error' });
     } finally {
       setIsLoading(false);
       setTimeout(() => setNotification(''), 2000);
@@ -100,42 +126,39 @@ function App() {
   const handleLogin = async () => {
     setIsLoading(true);
     setTimeout(async () => {
-        localStorage.setItem('isLoggedIn', 'true');
-        setIsLoggedIn(true);
-        setCurrentView('employees');
-        
-        // Fetch employees after login
-        try {
-            const response = await axios.get(`http://localhost:5000/employees`);
-            setEmployees(response.data);
-        } catch (error) {
-            console.error('Error fetching employees:', error);
-        }
-        
-        setIsLoading(false);
+      localStorage.setItem('isLoggedIn', 'true');
+      setIsLoggedIn(true);
+      setCurrentView('employees');
+      
+      // Fetch employees after login
+      try {
+        const response = await axios.get(`http://localhost:5000/employees`);
+        setEmployees(response.data);
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+      }
+      
+      setIsLoading(false);
     }, 2000);
   };
-
 
   // Handle sign-out
   const handleSignOut = () => {
     setIsLoading(true);
     setTimeout(() => {
-        localStorage.removeItem('isLoggedIn');
-        setIsLoggedIn(false);
-        setSelectedEmployee(null); // Clear selected employee
-        setCurrentView('signIn');
-        setIsLoading(false);
+      localStorage.removeItem('isLoggedIn');
+      setIsLoggedIn(false);
+      setSelectedEmployee(null); // Clear selected employee
+      setCurrentView('signIn');
+      setIsLoading(false);
     }, 2000);
   };
 
-
-  // hANDLE VIEW PROFILE
+  // Handle view employee profile
   const handleViewEmployee = (employee) => {
     setSelectedEmployee(employee);  // Set the selected employee
     setCurrentView('profile');      // Switch to the profile view
   };
-  
 
   const renderContent = () => {
     switch (currentView) {
@@ -147,7 +170,7 @@ function App() {
             employees={employees}
             onDeleteEmployee={handleDeleteEmployee}
             onViewEmployee={handleViewEmployee}
-            deletedEmployees = {deletedEmployees}
+            deletedEmployees={deletedEmployees}
           />
         );
       case 'registration':
@@ -183,7 +206,7 @@ function App() {
         </div>
       </main>
       {isLoading && <Loader />}
-      {notification && <Notification message={notification} type="error" />}
+      {notification && <Notification message={notification.message} type={notification.type} />}
     </div>
   );
 }
