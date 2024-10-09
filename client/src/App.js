@@ -58,38 +58,60 @@ function App() {
     fetchDeletedEmployees();
   }, []);
 
-  // Handle add employee
+
+  // HANDLE ADD EMPLOYEE
   const handleAddEmployee = async (employee, file) => {
     setIsLoading(true);
   
     try {
+      // Check if employee already exists
+      const checkResponse = await axios.post('http://localhost:5000/check-employee', {
+        email: employee.email,
+        idNumber: employee.idNumber,
+        phone: employee.phone
+      });
+  
+      if (checkResponse.data.exists) {
+        setNotification({ message: checkResponse.data.message, type: 'error' });
+        return;
+      }
+  
       let imageUrl = '';
   
       // Upload the image to Firebase Storage if a file is provided
       if (file) {
-        const storageRef = ref(storage, `employees/${file.name}`); // You can customize the storage path
+        const uniqueFilename = `${Date.now()}_${file.name}`;
+        const storageRef = ref(storage, `employees/${uniqueFilename}`);
         const snapshot = await uploadBytes(storageRef, file);
-        imageUrl = await getDownloadURL(snapshot.ref); // Get the uploaded image URL
+        imageUrl = await getDownloadURL(snapshot.ref);
       }
   
-      // Now include the image URL in the employee object
+      // Include the image URL in the employee object
       const newEmployee = { ...employee, profilePicture: imageUrl };
   
+      // Send the employee data wrapped in an object with the 'employee' key
       const response = await axios.post('http://localhost:5000/employees', { employee: newEmployee });
   
       setEmployees([...employees, { ...newEmployee, id: response.data.id }]);
-      setNotification('Successfully added');
+      setNotification({ message: 'Successfully added', type: 'success' });
     } catch (error) {
       console.error('Error adding employee:', error);
-      setNotification('Failed to add employee');
+      if (error.response) {
+        console.error('Server response:', error.response.data);
+      }
+      setNotification('Failed to add employee: ' + (error.response?.data?.message || error.message));
     } finally {
       setIsLoading(false);
-      setTimeout(() => setNotification(''), 2000);
+      setTimeout(() => setNotification(''), 3000);
     }
   };
 
+
   // Handle delete employee
   const handleDeleteEmployee = async (id) => {
+
+    setIsLoading(true);
+
     try {
       const employeeToDelete = employees.find(emp => emp.id === id);
       await axios.delete(`http://localhost:5000/employees/${id}`);
@@ -100,6 +122,7 @@ function App() {
       console.error('Error deleting employee:', error);
       setNotification({ message: 'Failed to delete employee', type: 'error' });
     } finally {
+      setIsLoading(false);
       setTimeout(() => setNotification(''), 2000);
     }
   };
@@ -173,10 +196,13 @@ function App() {
             deletedEmployees={deletedEmployees}
           />
         );
+
       case 'registration':
         return <Registration onAddEmployee={handleAddEmployee} setCurrentView={setCurrentView} />;
+
       case 'profile':
         return <Profile employee={selectedEmployee} onUpdateEmployee={handleUpdateEmployee} />;
+
       default:
         return <SignIn onLogin={handleLogin} />;
     }

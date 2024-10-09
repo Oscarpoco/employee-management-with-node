@@ -57,7 +57,7 @@ function Employees({ employees = [], onDeleteEmployee, onViewEmployee, deletedEm
                       <td>{employee.idNumber}</td>
                       <td>{employee.position}</td>
                       <td>{employee.phone}</td>
-                      <td><img src={employee.image} alt='employee'/></td>
+                      <td><img src={employee.profilePicture} alt='employee'/></td>
                       <td className='table-div'>
                         <button className='table-button' onClick={() => onViewEmployee(employee)}>View</button>
                         <button className='table-button' onClick={() => onDeleteEmployee(employee.id)}>Delete</button>
@@ -99,7 +99,7 @@ function Employees({ employees = [], onDeleteEmployee, onViewEmployee, deletedEm
                       <td>{employee.idNumber}</td>
                       <td>{employee.position}</td>
                       <td>{employee.phone}</td>
-                      <td><img src={employee.image} alt='employee' width='50' /></td>
+                      <td><img src={employee.profilePicture} alt='employee' width='50' /></td>
                     </tr>
                   ))}
                 </tbody>

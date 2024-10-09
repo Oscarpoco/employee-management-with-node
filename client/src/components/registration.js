@@ -9,14 +9,16 @@ function Registration({ onAddEmployee, setCurrentView }) {
   const [position, setPosition] = useState('');
   const [phone, setPhone] = useState('');
   const [image, setImage] = useState(null);
-  // const uid = Date.now().toString();
 
   // HANDLE SUBMITTING FORM
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newEmployee = { name, surname, email, idNumber, position, phone, image: URL.createObjectURL(image)};
-    onAddEmployee(newEmployee);
-    // Clear form
+  
+    const newEmployee = { name, surname, email, idNumber, position, phone };
+    console.log('Employee data from form:', newEmployee);  // Add this line
+    onAddEmployee(newEmployee, image);
+  
+    // Clear the form after submission
     setName('');
     setSurname('');
     setEmail('');
@@ -26,6 +28,7 @@ function Registration({ onAddEmployee, setCurrentView }) {
     setImage(null);
     setCurrentView('employees');
   };
+  
 
   return (
     <div className='registration-box'>

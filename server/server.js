@@ -22,21 +22,79 @@ const PORT = process.env.PORT;
 app.post('/employees', async (req, res) => {
   const { employee } = req.body;
 
-  // Check if the employee object is present and has required fields
+  // Check if the employee object is present and has all required fields
   if (!employee || !employee.name || !employee.surname || !employee.email || !employee.idNumber) {
     return res.status(400).json({ message: 'Employee data is missing or invalid' });
   }
 
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(employee.email)) {
+    return res.status(400).json({ message: 'Invalid email format' });
+  }
+
+  // Validate ID number format 
+  if (!/^\d{13}$/.test(employee.idNumber)) {
+    return res.status(400).json({ message: 'Invalid ID number format' });
+  }
+
+  // Validate phone number format
+  const phoneRegex = /^(\+27\d{9}|0\d{9})$/;
+  if (!phoneRegex.test(employee.phone)) {
+    return res.status(400).json({ message: 'Invalid phone number format' });
+  }
+
   try {
-    // Save the employee data along with the image URL
-    const docRef = await db.collection('employees').add(employee);
-    res.status(200).json({ id: docRef.id, employee, message: 'Employee added successfully' });
+    // Sanitize the employee data
+    const sanitizedEmployee = {
+      name: employee.name.trim(),
+      surname: employee.surname.trim(),
+      email: employee.email.trim().toLowerCase(),
+      idNumber: employee.idNumber.trim(),
+      position: employee.position.trim(),
+      phone: employee.phone.trim(),
+      profilePicture: employee.profilePicture || ''
+    };
+
+    // Save the sanitized employee data
+    const docRef = await db.collection('employees').add(sanitizedEmployee);
+    res.status(201).json({ 
+      id: docRef.id, 
+      employee: sanitizedEmployee, 
+      message: 'Employee added successfully' 
+    });
   } catch (error) {
     console.error('Error adding employee:', error);
     res.status(500).json({ message: 'Failed to add employee' });
   }
 });
 
+// CHECK EXISTANCE
+app.post('/check-employee', async (req, res) => {
+  const { email, idNumber, phone } = req.body;
+
+  try {
+    const idNumberQuery = await db.collection('employees').where('idNumber', '==', idNumber).get();
+    if (!idNumberQuery.empty) {
+      return res.json({ exists: true, message: 'An employee with this ID number is already registered' });
+    }
+
+    const phoneQuery = await db.collection('employees').where('phone', '==', phone).get();
+    if (!phoneQuery.empty) {
+      return res.json({ exists: true, message: 'An employee with this phone number is already registered' });
+    }
+
+    const emailQuery = await db.collection('employees').where('email', '==', email.toLowerCase()).get();
+    if (!emailQuery.empty) {
+      return res.json({ exists: true, message: 'An employee with this email is already registered' });
+    }
+
+    res.json({ exists: false });
+  } catch (error) {
+    console.error('Error checking employee:', error);
+    res.status(500).json({ message: 'Failed to check employee' });
+  }
+});
 
 // Get all employees (equivalent to Firestore getDocs)
 app.get('/employees', async (req, res) => {
